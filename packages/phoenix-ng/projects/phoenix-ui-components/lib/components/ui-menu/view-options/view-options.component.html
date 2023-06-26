@@ -17,20 +17,6 @@
     mat-menu-item
     (click)="
       $event.stopPropagation();
-      showEtaPhiGridCheckbox._inputElement.nativeElement.click()
-    "
-  >
-    <mat-checkbox
-      #showEtaPhiGridCheckbox
-      (click)="$event.stopPropagation()"
-      (change)="setEtaPhiGrid($event)"
-      >Show Eta Phi Grid
-    </mat-checkbox>
-  </button>
-  <button
-    mat-menu-item
-    (click)="
-      $event.stopPropagation();
       showAxisCheckbox._inputElement.nativeElement.click()
     "
   >
