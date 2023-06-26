@@ -558,54 +558,6 @@ export class SceneManager {
     );
   }
 
-  /**
-   * Sets scene cartesian grid visibility.
-   * @param visible If the axes will be visible (true) or hidden (false).
-   * @param scale Set the scale of the axes.
-   */
-  public setCartesianGrid(
-    visible: boolean,
-    showXY: boolean,
-    showYZ: boolean,
-    showZX: boolean,
-    xDistance: number,
-    yDistance: number,
-    zDistance: number,
-    sparsity: number = 1,
-    scale: number = 3000
-  ) {
-    this.createCartesianGrid(scale);
-    for (let i = 0; i <= 62; i += 1) {
-      this.cartesianGrid.children[i].visible = false;
-    }
-
-    const childPoints = [10, 31, 52];
-    const distances = [zDistance, xDistance, yDistance];
-    const visiblePlanes = [showXY, showYZ, showZX];
-
-    if (visible) {
-      for (let i = 0; i < 3; i += 1) {
-        if (visiblePlanes[i]) {
-          for (
-            let j = childPoints[i];
-            j >= childPoints[i] - (distances[i] * 10) / scale;
-            j -= sparsity
-          ) {
-            this.cartesianGrid.children[j].visible = visible;
-          }
-
-          for (
-            let j = childPoints[i];
-            j <= childPoints[i] + (distances[i] * 10) / scale;
-            j += sparsity
-          ) {
-            this.cartesianGrid.children[j].visible = visible;
-          }
-        }
-      }
-    }
-  }
-
   private createCartesianLabels(scale: number = 3000) {
     if (this.cartesianLabels == null) {
       this.cartesianLabels = new Group();
@@ -683,8 +635,8 @@ export class SceneManager {
    * @param scale Set the scale of the axes.
    */
   public setEtaPhiGrid(visible: boolean, scale: number = 3000) {
-    if (this.etaPhiGrid == null) {
-      this.etaPhiGrid = new Group();
+    if (this.grid == null) {
+      this.grid = new Group();
 
       // Currently hardcoding some of this
       let points = [];
@@ -700,7 +652,7 @@ export class SceneManager {
         const text = this.getText('η=' + eta.toPrecision(2), etaColour);
         text.position.set(etaVec.x, etaVec.y, etaVec.z);
         text.rotateOnWorldAxis(new Vector3(0, 1, 0), Math.PI / 2.0);
-        this.etaPhiGrid.add(text);
+        this.grid.add(text);
         points.push(etaVec);
       }
 
@@ -734,7 +686,7 @@ export class SceneManager {
         const phiVec = CoordinateHelper.etaPhiToCartesian(phiradius, 0.0, phi);
         const text = this.getText('φ=' + phiLabels[labelIndex++], phiColor);
         text.position.set(phiVec.x, phiVec.y, phiVec.z);
-        this.etaPhiGrid.add(text);
+        this.grid.add(text);
         points.push(phiVec);
       }
       const phiGeometry = new BufferGeometry().setFromPoints(points);
@@ -748,12 +700,9 @@ export class SceneManager {
       phiLines.computeLineDistances(); // Needed for dashed lines
 
       // Add to group and scene
-      this.etaPhiGrid.add(etaLines);
-      this.etaPhiGrid.add(phiLines);
-
-      this.etaPhiGrid.name = 'gridline';
-      this.etaPhiGrid.traverse((child) => (child.name = 'gridline'));
-      this.scene.add(this.etaPhiGrid);
+      this.grid.add(etaLines);
+      this.grid.add(phiLines);
+      this.scene.add(this.grid);
 
       // Now, for debugging, draw phi / theta native to threejs (though flipping for azimuthal)
       // eslint-disable-next-line no-constant-condition
@@ -781,17 +730,17 @@ export class SceneManager {
               new Color(0x00ff00)
             );
             text.position.set(end.x, end.y, end.z);
-            this.etaPhiGrid.add(text);
+            this.grid.add(text);
           }
         }
         const geometry2 = new BufferGeometry().setFromPoints(points);
         const material2 = new LineDashedMaterial({ color: 0x00ff00 });
         const lines2 = new LineSegments(geometry2, material2);
-        this.etaPhiGrid.add(lines2);
-        this.scene.add(this.etaPhiGrid);
+        this.grid.add(lines2);
+        this.scene.add(this.grid);
       }
     }
-    this.etaPhiGrid.visible = visible;
+    this.grid.visible = visible;
   }
 
   /**
