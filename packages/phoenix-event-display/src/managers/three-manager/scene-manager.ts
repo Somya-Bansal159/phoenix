@@ -45,9 +45,7 @@ export class SceneManager {
   /** Labels for the x, y and z-axis. */
   private axisLabels: Object3D;
   /** Eta/phi grid */
-  private etaPhiGrid: Object3D;
-  /** Cartesian grid */
-  private cartesianGrid: Object3D;
+  private grid: Object3D;
   /** Cartesian grid labels */
   private cartesianLabels: Object3D;
   /** Whether to use directional light placed at the camera position. */
@@ -558,130 +556,6 @@ export class SceneManager {
       'change',
       this.labelTextLookCallbacks[uuid]
     );
-  }
-
-  /**
-   * Creates the cartesian grid if doesn't exist already
-   */
-  private createCartesianGrid(scale: number = 3000) {
-    if (this.cartesianGrid == null) {
-      this.cartesianGrid = new Group();
-
-      const xColor = new Color(0xd63333);
-      const yColor = new Color(0x33d633);
-      const zColor = new Color(0x3333d6);
-
-      const xMaterial = new LineDashedMaterial({
-        color: xColor,
-        dashSize: 0.5,
-        gapSize: 0.1,
-        scale: 0.01,
-      });
-      const yMaterial = new LineDashedMaterial({
-        color: yColor,
-        dashSize: 0.5,
-        gapSize: 0.1,
-        scale: 0.01,
-      });
-      const zMaterial = new LineDashedMaterial({
-        color: zColor,
-        dashSize: 0.5,
-        gapSize: 0.1,
-        scale: 0.01,
-      });
-
-      // xy plane
-      let xyPlane = new Group();
-      for (let z = -scale; z <= scale; z += 0.1 * scale) {
-        xyPlane = new Group();
-
-        let points = [];
-        for (let y = -scale; y <= scale; y += 0.1 * scale) {
-          points.push(new Vector3(-scale, y, z));
-          points.push(new Vector3(scale, y, z));
-        }
-        let geometry = new BufferGeometry().setFromPoints(points);
-        let material = xMaterial;
-        let lines = new LineSegments(geometry, material);
-        lines.computeLineDistances();
-        xyPlane.add(lines);
-
-        points = [];
-        for (let x = -scale; x <= scale; x += 0.1 * scale) {
-          points.push(new Vector3(x, -scale, z));
-          points.push(new Vector3(x, scale, z));
-        }
-        geometry = new BufferGeometry().setFromPoints(points);
-        material = yMaterial;
-        lines = new LineSegments(geometry, material);
-        lines.computeLineDistances();
-        xyPlane.add(lines);
-        this.cartesianGrid.add(xyPlane);
-      }
-
-      // YZ plane
-      let yzPlane = new Group();
-      for (let x = -scale; x <= scale; x += 0.1 * scale) {
-        yzPlane = new Group();
-
-        let points = [];
-        for (let y = -scale; y <= scale; y += 0.1 * scale) {
-          points.push(new Vector3(x, y, -scale));
-          points.push(new Vector3(x, y, scale));
-        }
-        let geometry = new BufferGeometry().setFromPoints(points);
-        let material = zMaterial;
-        let lines = new LineSegments(geometry, material);
-        lines.computeLineDistances();
-        yzPlane.add(lines);
-
-        points = [];
-        for (let z = -scale; z <= scale; z += 0.1 * scale) {
-          points.push(new Vector3(x, -scale, z));
-          points.push(new Vector3(x, scale, z));
-        }
-        geometry = new BufferGeometry().setFromPoints(points);
-        material = yMaterial;
-        lines = new LineSegments(geometry, material);
-        lines.computeLineDistances();
-        yzPlane.add(lines);
-        this.cartesianGrid.add(yzPlane);
-      }
-
-      // ZX plane
-      let zxPlane = new Group();
-      for (let y = -scale; y <= scale; y += 0.1 * scale) {
-        zxPlane = new Group();
-
-        let points = [];
-        for (let x = -scale; x <= scale; x += 0.1 * scale) {
-          points.push(new Vector3(x, y, -scale));
-          points.push(new Vector3(x, y, scale));
-        }
-        let geometry = new BufferGeometry().setFromPoints(points);
-        let material = zMaterial;
-        let lines = new LineSegments(geometry, material);
-        lines.computeLineDistances();
-        zxPlane.add(lines);
-
-        points = [];
-        for (let z = -scale; z <= scale; z += 0.1 * scale) {
-          points.push(new Vector3(-scale, y, z));
-          points.push(new Vector3(scale, y, z));
-        }
-        geometry = new BufferGeometry().setFromPoints(points);
-        material = xMaterial;
-        lines = new LineSegments(geometry, material);
-        lines.computeLineDistances();
-        zxPlane.add(lines);
-        this.cartesianGrid.add(zxPlane);
-      }
-
-      this.cartesianGrid.name = 'gridline';
-      this.cartesianGrid.traverse((child) => (child.name = 'gridline'));
-      this.cartesianGrid.children.forEach((child) => (child.visible = false));
-      this.scene.add(this.cartesianGrid);
-    }
   }
 
   /**
