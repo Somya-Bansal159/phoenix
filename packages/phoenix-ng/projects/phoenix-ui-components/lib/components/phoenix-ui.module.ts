@@ -60,7 +60,6 @@ import {
   EventDataExplorerComponent,
   EventDataExplorerDialogComponent,
   CycleEventsComponent,
-  CartesianGridComponent,
   DistanceComponent,
 } from './ui-menu';
 import { AttributePipe } from '../services/extras/attribute.pipe';
@@ -81,7 +80,6 @@ const PHOENIX_COMPONENTS: Type<any>[] = [
   CollectionsInfoComponent,
   GeometryBrowserComponent,
   GeometryBrowserOverlayComponent,
-  CartesianGridComponent,
   DistanceComponent,
   MenuToggleComponent,
   CollectionsInfoOverlayComponent,
