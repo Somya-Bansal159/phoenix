@@ -37,9 +37,9 @@ export class ViewOptionsComponent implements OnInit, OnDestroy {
     this.eventDisplay.getUIManager().setShowAxis(value);
   }
 
-  setEtaPhiGrid(change: MatCheckboxChange) {
+  setGrid(change: MatCheckboxChange) {
     const value = change.checked;
-    this.eventDisplay.getUIManager().setShowEtaPhiGrid(value);
+    this.eventDisplay.getUIManager().setShowGrid(value);
   }
 
   show3DMousePoints(change: MatCheckboxChange) {
