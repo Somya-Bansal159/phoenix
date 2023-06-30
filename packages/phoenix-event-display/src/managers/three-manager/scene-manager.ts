@@ -41,13 +41,11 @@ export class SceneManager {
   /** List of objects to ignore for getting a clean scene. */
   private ignoreList: string[];
   /** An axes helper for visualizing the x, y and z-axis. */
-  private axis: Object3D;
+  private axis: AxesHelper;
   /** Labels for the x, y and z-axis. */
   private axisLabels: Object3D;
   /** Eta/phi grid */
   private grid: Object3D;
-  /** Cartesian grid labels */
-  private cartesianLabels: Object3D;
   /** Whether to use directional light placed at the camera position. */
   private useCameraLight: boolean = true;
   /** Directional light following the camera position. */
@@ -362,35 +360,7 @@ export class SceneManager {
     labels: boolean = true
   ) {
     if (this.axis == null) {
-      this.axis = new Group();
-
-      const xColor = new Color(0xd63333);
-      const yColor = new Color(0x33d633);
-      const zColor = new Color(0x3333d6);
-      const xMaterial = new LineBasicMaterial({ color: xColor });
-      const yMaterial = new LineBasicMaterial({ color: yColor });
-      const zMaterial = new LineBasicMaterial({ color: zColor });
-
-      // X axis
-      let points = [new Vector3(-scale, 0, 0), new Vector3(scale, 0, 0)];
-      let geometry = new BufferGeometry().setFromPoints(points);
-      const xAxis = new LineSegments(geometry, xMaterial);
-      this.axis.add(xAxis);
-
-      // Y axis
-      points = [new Vector3(0, -scale, 0), new Vector3(0, scale, 0)];
-      geometry = new BufferGeometry().setFromPoints(points);
-      const yAxis = new LineSegments(geometry, yMaterial);
-      this.axis.add(yAxis);
-
-      // Z axis
-      points = [new Vector3(0, 0, -scale), new Vector3(0, 0, scale)];
-      geometry = new BufferGeometry().setFromPoints(points);
-      const zAxis = new LineSegments(geometry, zMaterial);
-      this.axis.add(zAxis);
-
-      this.axis.name = 'gridline';
-      this.axis.traverse((child) => (child.name = 'gridline'));
+      this.axis = new AxesHelper(scale);
       this.scene.add(this.axis);
     }
     this.axis.visible = visible;
@@ -408,9 +378,6 @@ export class SceneManager {
       this.axisLabels.children[0].position.set(scale + 20, 0, 0);
       this.axisLabels.children[1].position.set(0, scale + 20, 0);
       this.axisLabels.children[2].position.set(0, 0, scale + 20);
-
-      this.axisLabels.name = 'XYZ Labels';
-      this.axisLabels.traverse((child) => (child.name = 'XYZ Labels'));
 
       this.scene.add(this.axisLabels);
     }
@@ -556,53 +523,6 @@ export class SceneManager {
       'change',
       this.labelTextLookCallbacks[uuid]
     );
-  }
-
-  private createCartesianLabels(scale: number = 3000) {
-    if (this.cartesianLabels == null) {
-      this.cartesianLabels = new Group();
-      this.cartesianLabels.name = 'XYZ Labels';
-
-      const xColor = new Color(0xd63333);
-      const yColor = new Color(0x33d633);
-      const zColor = new Color(0x3333d6);
-
-      // X Labels
-      for (let x = -scale; x <= scale; x += 0.1 * scale) {
-        const text = this.getText(x.toString(), xColor);
-        text.position.set(x - 70, 0, 0);
-        this.cartesianLabels.add(text);
-      }
-
-      // Y Labels
-      for (let y = -scale; y <= scale; y += 0.1 * scale) {
-        const text = this.getText(y.toString(), yColor);
-        text.position.set(-70, y, 0);
-        this.cartesianLabels.add(text);
-      }
-
-      // Z Labels
-      for (let z = -scale; z <= scale; z += 0.1 * scale) {
-        const text = this.getText(z.toString(), zColor);
-        text.position.set(-70, 0, z);
-        this.cartesianLabels.add(text);
-      }
-
-      this.cartesianLabels.traverse((child) => (child.name = 'XYZ Labels'));
-      this.scene.add(this.cartesianLabels);
-      this.cartesianLabels.children.forEach((child) => (child.visible = false));
-
-      this.setAxis(false, 3000);
-    }
-  }
-
-  /**
-   * Show labels of the cartesian grid.
-   */
-  public showLabels(visible: boolean) {
-    this.createCartesianLabels();
-    this.setAxis(visible, 3000);
-    this.cartesianLabels.children.forEach((child) => (child.visible = visible));
   }
 
   /**
