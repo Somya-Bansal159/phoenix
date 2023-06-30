@@ -391,13 +391,6 @@ export class UIManager {
   }
 
   /**
-   * Show labels on cartesian grid
-   */
-  public showLabels(visible: boolean) {
-    this.three.getSceneManager().showLabels(visible);
-  }
-
-  /**
    * Translate the cartesian grid
    */
   public translateCartesianGrid(translate: Vector3) {
