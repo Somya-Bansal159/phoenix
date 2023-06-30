@@ -51,10 +51,6 @@ import { Vector3 } from 'three';
     this.cartesianPos = finalPos;
   }
 
-  showLabels(change: MatCheckboxChange) {
-    this.eventDisplay.getUIManager().showLabels(change.checked);
-  }
-
 
 
     if (this.originChangedSub != null) this.originChangedSub.unsubscribe();
