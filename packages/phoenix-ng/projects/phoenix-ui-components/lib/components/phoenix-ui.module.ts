@@ -60,7 +60,6 @@ import {
   EventDataExplorerComponent,
   EventDataExplorerDialogComponent,
   CycleEventsComponent,
-  DistanceComponent,
 } from './ui-menu';
 import { AttributePipe } from '../services/extras/attribute.pipe';
 import { EventDisplayService } from '../services/event-display.service';
@@ -71,7 +70,6 @@ import { EmbedMenuComponent } from './embed-menu/embed-menu.component';
 import { ExperimentLinkComponent } from './embed-menu/experiment-link/experiment-link.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 import { RingLoaderComponent } from './ring-loader/ring-loader.component';
-import { CartesianGridConfigComponent } from './ui-menu/cartesian-grid/cartesian-grid-config/cartesian-grid-config.component';
 
 const PHOENIX_COMPONENTS: Type<any>[] = [
   NavComponent,
@@ -80,7 +78,6 @@ const PHOENIX_COMPONENTS: Type<any>[] = [
   CollectionsInfoComponent,
   GeometryBrowserComponent,
   GeometryBrowserOverlayComponent,
-  DistanceComponent,
   MenuToggleComponent,
   CollectionsInfoOverlayComponent,
   IoOptionsComponent,
@@ -94,7 +91,6 @@ const PHOENIX_COMPONENTS: Type<any>[] = [
   DarkThemeComponent,
   AutoRotateComponent,
   ViewOptionsComponent,
-  CartesianGridConfigComponent,
   OverlayViewWindowComponent,
   OverlayComponent,
   ExperimentInfoComponent,
