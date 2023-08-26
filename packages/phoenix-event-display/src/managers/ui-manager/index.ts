@@ -1,5 +1,5 @@
 import * as Stats from 'stats-js';
-import { Color, Object3D, Vector3 } from 'three';
+import { Color, Object3D } from 'three';
 import { ThreeManager } from '../three-manager';
 import { Configuration } from '../../lib/types/configuration';
 import {
@@ -363,7 +363,6 @@ export class UIManager {
     const theme = dark ? 'dark' : 'light';
     setToLocalStorage('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
-    this.three.setDarkColor(dark);
   }
 
   /**
@@ -391,47 +390,11 @@ export class UIManager {
   }
 
   /**
-   * Translate the cartesian grid
-   */
-  public translateCartesianGrid(translate: Vector3) {
-    this.three.getSceneManager().translateCartesianGrid(translate);
-  }
-
-  /**
-   * Translate the cartesian labels
-   */
-  public translateCartesianLabels(translate: Vector3) {
-    this.three.getSceneManager().translateCartesianLabels(translate);
-  }
-
-  /**
    * Set whether to show the eta/phi or not
    * @param show If the grid is to be shown or not.
    */
   public setShowGrid(show: boolean) {
     this.three.getSceneManager().setEtaPhiGrid(show);
-  }
-
-  /**
-   * Show 3D coordinates where the mouse pointer clicks
-   * @param show If the coordinates are to be shown or not.
-   */
-  public show3DMousePoints(show: boolean, origin: Vector3) {
-    this.three.show3DMousePoints(show, origin);
-  }
-
-  /**
-   * Show 3D Distance between two clicked points
-   */
-  public show3DDistance(show: boolean) {
-    this.three.show3DDistance(show);
-  }
-
-  /**
-   * Shift cartesian grid by a mouse click
-   */
-  public shiftCartesianGridByPointer(change: boolean) {
-    this.three.shiftCartesianGrid(change);
   }
 
   /**
