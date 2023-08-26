@@ -526,30 +526,6 @@ export class SceneManager {
   }
 
   /**
-   * Translate the cartesianGrid
-   */
-  public translateCartesianGrid(translate: Vector3) {
-    this.createCartesianGrid();
-
-    const distance = translate.length();
-    const unitVector = translate.normalize();
-    this.cartesianGrid.translateOnAxis(unitVector, distance);
-  }
-
-  /**
-   * Translate Cartesian labels
-   */
-  public translateCartesianLabels(translate: Vector3) {
-    this.createCartesianLabels();
-
-    const distance = translate.length();
-    const unitVector = translate.normalize();
-    this.cartesianLabels.translateOnAxis(unitVector, distance);
-    this.axis.translateOnAxis(unitVector, distance);
-    this.axisLabels.translateOnAxis(unitVector, distance);
-  }
-
-  /**
    * Sets scene eta/phi grid visibility.
    * @param visible If the axes will be visible (true) osr hidden (false).
    * @param scale Set the scale of the axes.
