@@ -3,14 +3,14 @@
     mat-menu-item
     (click)="
       $event.stopPropagation();
-      showMouse3DPointsCheckbox._inputElement.nativeElement.click()
+      showGridCheckbox._inputElement.nativeElement.click()
     "
   >
     <mat-checkbox
-      #showMouse3DPointsCheckbox
+      #showGridCheckbox
       (click)="$event.stopPropagation()"
-      (change)="show3DMousePoints($event)"
-      >Show 3D Coordinates
+      (change)="setGrid($event)"
+      >Show Grid
     </mat-checkbox>
   </button>
   <button
