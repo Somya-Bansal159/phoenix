@@ -16,7 +16,6 @@ import {
   Camera,
   BufferGeometry,
   Quaternion,
-  ArrowHelper,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
